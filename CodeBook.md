@@ -1,28 +1,55 @@
----
-title: "CodeBook"
-output: html_document
----
+## Getting & cleaning data course project
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+The `run_analysis.R` script cleaned the dataset and leaves tidy data to work with. This was done through the following steps:
 
-## R Markdown
+1. Prepare data
+2. Merge dataset
+3. Extract mean and std measurements
+4. Descriptive names
+5. Appropriate labels
+6. Independent dataset
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+#### 1. Prepare data
+In this step the data was downloaded and the different databases where assigned to an R variable in order to proceed with the cleaning tasks. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#### 2. Merge dataset
+using the *rbind* function datasets `X`, `Y` and `subject` where created. The datasets used to create this new datasets were:
 
-```{r cars}
-summary(cars)
-```
+* `X` (rows, columns)
++ `x_train` (rows, columns)
++ `x_test` (rows, columns)
 
-## Including Plots
+* `Y` 
++ `y_train`
++ `y_test`
 
-You can also embed plots, for example:
+* `subject`
++ `subject_train`
++ `subject_test`
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+Finally, through a `cbind()`, all (`X`, `Y` and `subject`) datasets are taken together to create the database which will be tidied.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#### 3. Extract mean and std measurements
+A new database is created by selecting only the columns: subject, code and the measurements on the mean and standard deviation (std) for each measurement
+
+#### 4. Descriptive names
+For the code column which has a number in it instead of a descriptive name, a left join is applied in order to obtain the new database with the descriptive names of the activities.
+
+#### 5. Appropriate labels
+Convert the column named `code` in `ndb_named` into `activities`
+Convert all column names with the following:
+
++ `Acc` into `Accelerometer`
++ `Gyro` into `Gyroscope`
++ `BodyBody` into `Body`
++ ``Mag` into `Magnitude`
+
+Columns that: 
++ start with `f` replace by `Frequency`
++ start with `t` replace by `Time`
+
+#### 6. Independent dataset
+Use dataset from step four and create a second tidy data set which contains the average of each variable for each of the activities and subjects
+
+
+
