@@ -85,3 +85,5 @@ names(ndb_named)<-gsub("gravity", "Gravity", names(ndb_named))
 tidy_db <- group_by(ndb_named, subject, activity) %>% 
             summarise_all(funs(mean))
 
+write.table(tidy_db, "tidy_db.txt", row.name=FALSE)
+
